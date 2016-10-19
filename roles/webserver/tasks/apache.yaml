@@ -10,9 +10,8 @@
 - file: path=/etc/httpd/conf.d/autoindex.conf state=absent
 - file: path=/etc/httpd/conf.d/userdir.conf state=absent
 - file: path=/etc/httpd/conf.d/welcome.conf state=absent
-- file: path=/etc/httpd/htpasswd state=touch owner=root group=apache mode=0640
 
-- htpasswd: path=/etc/httpd/htpasswd name=docker password=docker owner=root group=apache mode=0640
+- htpasswd: path=/etc/httpd/htpasswd name={{ apache_auth_username }} password={{ apache_auth_password }} owner=root group=apache mode=0640
 
 - name: create self-signed SSL cert
   command: openssl req -new -nodes -x509 -subj "/C=PL/ST=Mazowieckie/L=Warszawa/O=IT/CN={{ ansible_fqdn }}" -days 3650 -keyout /etc/httpd/certs/{{ ansible_fqdn }}.key -out /etc/httpd/certs/{{ ansible_fqdn }}.crt -extensions v3_ca creates=/etc/httpd/certs/{{ ansible_fqdn }}.crt
