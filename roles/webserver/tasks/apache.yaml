@@ -1,0 +1,33 @@
+---
+- name: Install apache and mod ssl
+  yum: name={{ item }} state=present
+  with_items:
+    - httpd
+    - mod_ssl
+
+- file: path=/etc/httpd/certs state=directory owner=root group=root mode=0755
+- file: path=/etc/httpd/conf.d/README state=absent
+- file: path=/etc/httpd/conf.d/autoindex.conf state=absent
+- file: path=/etc/httpd/conf.d/userdir.conf state=absent
+- file: path=/etc/httpd/conf.d/welcome.conf state=absent
+- file: path=/etc/httpd/htpasswd state=touch owner=root group=apache mode=0640
+
+- htpasswd: path=/etc/httpd/htpasswd name=docker password=docker owner=root group=apache mode=0640
+
+- name: create self-signed SSL cert
+  command: openssl req -new -nodes -x509 -subj "/C=PL/ST=Mazowieckie/L=Warszawa/O=IT/CN={{ ansible_fqdn }}" -days 3650 -keyout /etc/httpd/certs/{{ ansible_fqdn }}.key -out /etc/httpd/certs/{{ ansible_fqdn }}.crt -extensions v3_ca creates=/etc/httpd/certs/{{ ansible_fqdn }}.crt
+
+- name: Create apache ssl configuration file
+  template:
+    src="ssl.conf.j2"
+    dest="/etc/httpd/conf.d/ssl.conf"
+
+- name: Create vhost apache configuration file
+  template:
+    src="docker-registry.conf.j2"
+    dest="/etc/httpd/conf.d/docker-registry.conf"
+
+- name: Create apache configuration file with security rules
+  template:
+    src="00-security.conf.j2"
+    dest="/etc/httpd/conf.modules.d/00-security.conf"

@@ -1,0 +1,11 @@
+---
+docker_registry_config: /etc/docker-registry.yml
+settings_flavor: prod
+registry_address: 127.0.0.1
+registry_port: 5000
+storage: local
+registry_standalone: true
+registry_log_level: true
+storage_path: /data/registry
+search_backend: sqlalchemy
+sqlalchemy_index_database: /data/registry/sqlite/docker-registry.db

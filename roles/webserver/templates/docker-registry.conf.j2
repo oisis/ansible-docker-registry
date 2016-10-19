@@ -1,0 +1,51 @@
+<VirtualHost *:443>
+    ServerName {{ ansible_fqdn }}
+    ServerAdmin admin@{{ ansible_fqdn }}
+    ErrorLog logs/{{ ansible_fqdn }}-ssl_error_log
+    TransferLog logs/{{ ansible_fqdn }}-ssl_access_log
+    CustomLog logs/{{ ansible_fqdn }}-ssl_request_log "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
+    LogLevel debug
+
+
+    SSLEngine on
+    SSLProtocol all -SSLv2
+    SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5
+    SSLCertificateFile /etc/httpd/certs/{{ ansible_fqdn }}.crt
+    SSLCertificateKeyFile /etc/httpd/certs/{{ ansible_fqdn }}.key
+
+
+    Header set Host "{{ ansible_fqdn }}"
+    RequestHeader set X-Forwarded-Proto "https"
+
+    ProxyRequests     off
+    ProxyPreserveHost on
+
+    # Some HTTPd came configured with /error for error messages
+    # In this case, you should disable proxying to remote docker-registry
+    ProxyPass /error/ !
+
+    ProxyPass         / http://127.0.0.1:5000/
+    ProxyPassReverse  / http://127.0.0.1:5000/
+
+    <Location />
+        Order deny,allow
+        Allow from all
+
+        AuthName "HRS Docker Registry"
+        AuthType basic
+        AuthUserFile "/etc/httpd/htpasswd"
+        Require valid-user
+    </Location>
+
+    # Allow ping and users to run unauthenticated.
+    <Location /v1/_ping>
+        Satisfy any
+        Allow from all
+    </Location>
+
+    # Allow ping and users to run unauthenticated.
+    <Location /_ping>
+        Satisfy any
+        Allow from all
+    </Location>
+</VirtualHost>

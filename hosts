@@ -1,0 +1,9 @@
+[vagrant-docker-registry]
+192.168.0.2 ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
+
+[prod-docker-registry]
+192.168.0.254 ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
+
+[docker-registry:children]
+prod-docker-registry
+vagrant-docker-registry

@@ -1,0 +1,15 @@
+---
+- name: Install docker-registry
+  yum: name=docker-registry state=present
+
+- file: path=/data/registry/sqlite state=directory owner=root group=root mode=0755
+
+- name: Create docker-registry configuration file
+  template:
+    src="docker-registry.yml.j2"
+    dest="/etc/docker-registry.yml"
+
+- name: Create docker-registry configuration file
+  template:
+    src="docker-registry.j2"
+    dest="/etc/sysconfig/docker-registry"

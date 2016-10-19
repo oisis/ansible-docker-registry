@@ -1,0 +1,19 @@
+---
+- name: Install docker-python
+  yum: name=docker-python state=present
+
+- name: run docker registry frontend
+  docker_container:
+    name: docreg_frontend
+    image: docker.io/konradkleine/docker-registry-frontend:v1-deprecated
+    state: started
+    restart: yes
+    pull: true
+    ports:
+      - 8080:80
+    exposed_ports:
+      - 8080
+    env:
+      ENV_DOCKER_REGISTRY_HOST=127.0.0.1
+      ENV_DOCKER_REGISTRY_PORT=5000
+      ENV_DOCKER_REGISTRY_USE_SSL=0

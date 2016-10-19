@@ -1,0 +1,5 @@
+---
+- service: name=network state=restarted # Patch for Vagrant 1.8.6
+- include: yum_repos.yaml
+- include: base_packages.yaml
+- selinux: state=disabled

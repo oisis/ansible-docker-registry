@@ -1,0 +1,12 @@
+---
+- name: start docker-registry
+  service: name=docker-registry enabled=yes state=started
+
+- name: restart docker-registry
+  service: name=docker-registry state=restarted
+
+- name: reload docker-registry
+  service: name=docker-registry state=reloaded
+
+- name: stop docker-registry
+  service: name=docker-registry state=stopped

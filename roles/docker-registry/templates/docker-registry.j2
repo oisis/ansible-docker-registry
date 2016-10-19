@@ -1,0 +1,14 @@
+# The Docker registry configuration file
+DOCKER_REGISTRY_CONFIG={{ docker_registry_config }}
+
+# The configuration to use from DOCKER_REGISTRY_CONFIG file
+SETTINGS_FLAVOR={{ settings_flavor }}
+
+# Address to bind the registry to
+REGISTRY_ADDRESS={{ registry_address }}
+
+# Port to bind the registry to
+REGISTRY_PORT={{ registry_port }}
+
+# Number of workers to handle the connections
+GUNICORN_WORKERS=8

@@ -1,0 +1,10 @@
+---
+- name: install extra packages
+  yum: name={{ item }} state=present
+  with_items:
+    - mc
+    - htop
+    - telnet
+    - curl
+    - python-passlib
+    - libselinux-python

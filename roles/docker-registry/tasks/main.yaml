@@ -1,0 +1,4 @@
+---
+- include: docker_registry.yaml
+- include: start_docker_registry.yaml
+- include: docker_registry_front.yaml
