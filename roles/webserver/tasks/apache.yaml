@@ -31,3 +31,8 @@
   template:
     src="00-security.conf.j2"
     dest="/etc/httpd/conf.modules.d/00-security.conf"
+
+- name: Create apache configuration file with ServerName
+  template:
+    src="00-servername.conf.j2"
+    dest="/etc/httpd/conf.modules.d/00-servername.conf"
