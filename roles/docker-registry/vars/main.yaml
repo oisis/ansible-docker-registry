@@ -1,7 +1,7 @@
 ---
 docker_registry_config: /etc/docker-registry.yml
 settings_flavor: prod
-registry_address: 127.0.0.1
+registry_address: 0.0.0.0
 registry_port: 5000
 storage: local
 registry_standalone: true
