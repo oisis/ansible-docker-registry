@@ -21,18 +21,33 @@
   template:
     src="ssl.conf.j2"
     dest="/etc/httpd/conf.d/ssl.conf"
+  notify:
+    - restart apache
 
 - name: Create vhost apache configuration file
   template:
+    src="docker-registry-frontend.conf.j2"
+    dest="/etc/httpd/conf.d/docker-registry-frontend.conf"
+  notify:
+    - restart apache
+
+- name: Create SSL vhost apache configuration file
+  template:
     src="docker-registry.conf.j2"
     dest="/etc/httpd/conf.d/docker-registry.conf"
+  notify:
+    - restart apache
 
 - name: Create apache configuration file with security rules
   template:
     src="00-security.conf.j2"
     dest="/etc/httpd/conf.modules.d/00-security.conf"
+  notify:
+    - restart apache
 
 - name: Create apache configuration file with ServerName
   template:
     src="00-servername.conf.j2"
     dest="/etc/httpd/conf.modules.d/00-servername.conf"
+  notify:
+    - restart apache

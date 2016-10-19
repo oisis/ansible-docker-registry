@@ -1,0 +1,13 @@
+<VirtualHost *:80>
+    ServerName {{ ansible_fqdn }}
+    ServerAdmin admin@{{ ansible_fqdn }}
+    ErrorLog logs/{{ ansible_fqdn }}-error_log
+    TransferLog logs/{{ ansible_fqdn }}-access_log
+    LogLevel warn
+
+    ProxyRequests     off
+    ProxyPreserveHost on
+
+    ProxyPass         / http://127.0.0.1:8080/
+    ProxyPassReverse  / http://127.0.0.1:8080/
+</VirtualHost>

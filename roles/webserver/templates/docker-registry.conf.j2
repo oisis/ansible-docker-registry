@@ -4,7 +4,7 @@
     ErrorLog logs/{{ ansible_fqdn }}-ssl_error_log
     TransferLog logs/{{ ansible_fqdn }}-ssl_access_log
     CustomLog logs/{{ ansible_fqdn }}-ssl_request_log "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
-    LogLevel debug
+    LogLevel warn
 
 
     SSLEngine on
