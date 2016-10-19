@@ -14,5 +14,5 @@
     exposed_ports:
       - 8080
     env:
-      ENV_DOCKER_REGISTRY_HOST={{ ansible_docker0.ipv4.address }}
+      ENV_DOCKER_REGISTRY_HOST={{ ansible_default_ipv4.address }}
       ENV_DOCKER_REGISTRY_PORT=5000
