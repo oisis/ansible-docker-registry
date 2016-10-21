@@ -27,6 +27,9 @@ Change 192.168.0.254 to your server real IP address
 #### Run ansible connection test:
 ```ansible -i ./hosts all --limit prod-docker-registry -m ping```
 
+#### Check what Ansible is going to do:
+```ansible-playbook -i ./hosts --limit docker-registry playbook.yaml --check```
+
 #### Run Ansible on remote host prod-docker-registry:
 ```ansible-playbook -i ./hosts -u username -k --limit prod-docker-registry playbook.yaml```
 
