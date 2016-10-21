@@ -6,7 +6,7 @@
   roles:
     - base
 
-- hosts: docker-registry
+- hosts: docker-registry:children
   become: true
   become_user: root
   become_method: sudo
